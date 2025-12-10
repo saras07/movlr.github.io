@@ -130,18 +130,108 @@
     </section>
 
     <section class="section">
-        <div class="container is-max-desktop">
-            <!-- Introduction. -->
-            <div class="columns is-centered has-text-centered">
-                <div class="column">
-                    <h2 class="title is-3"><span class="dvima">Experiments</span></h2>
-                    <div class="content has-text-justified">
-                        <p style="font-size: 125%">
-
+        <div class="container is-max-widescreen">
+            <div class="rows">
+                <div class="rows is-centered ">
+                    <div class="row is-full-width">
+                        <h2 class="title is-3"><span class="dvima">Motion from Vision Language Representation</span></h2>
+                        <p style="font-size:125%; text-indent:2em;">
+                            We present Motion from Vision Language Representation (MoVLR), which automatically learns rewards for high-dimensional musculoskeletal control by integrating both descriptive and dynamical feedback. MoVLR extracts high-dimensional musculoskeletal dynamics of candidate rewards via policy optimization and rollout. The resulting control dynamics are rendered into movement videos to provide dynamical feedback. A vision-language model then evaluates the agent's motion and produces structured biomechanical feedback, which is used by a LLM to refine the reward generation process.
+                        </p>
+                        <p style="font-size:125%; text-indent:2em;">
+                            By encoding temporal dynamics into semantically meaningful descriptors, MoVLR bridges raw perceptual input with domain-informed motion representations, providing a scalable path toward biomechanically realistic control reward for high-dimensional musculoskeletal systems.
+                        </p>
+                        <img src="assets/images/pipeline.png" class="interpolation-image" alt="" style="display: block; margin-left: auto; margin-right: auto" />
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <section class="section">
+        <div class="container is-max-widescreen">
+            <div class="rows">
+                <div class="rows is-centered ">
+                    <div class="row is-full-width">
+                        <h2 class="title is-3"><span class="dvima">Language-Guided Reward Design</span></h2>
+                        <p style="font-size:125%; text-indent:2em;">
+                            Example inputs and outputs of the (a) VLM, and (b) LLM. The VLM analyzes a video motion sequence based on the given motion description and provides diagnostic feedback. The LLM uses this feedback to design corresponding code modifications to the reward function.
+                        </p>
+                        <img src="assets/images/prompts.jpg" class="interpolation-image" alt="" style="display: block; margin-left: auto; margin-right: auto" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-widescreen">
+            <div class="rows">
+                <div class="rows is-centered ">
+                    <div class="row is-full-width">
+                        <h2 class="title is-3"><span class="dvima">Experiments</span></h2>
+                        <h3 class="title is-4"><span class="dvima">Environments</span></h3>
+                        <p style="font-size:125%; text-indent:2em;">
+                            Our experimental setup spans three musculoskeletal systems and a total of eight tasks implemented in the MuJoCo simulator. The suite is designed to capture a broad spectrum of control challenges. It includes three locomotion environments (flat, rough, and sloped terrain) that test stability and adaptability under varying ground conditions. The flat terrain setting additionally includes two variants -- a turning task (left/right directional transitions) and an injured-body condition where selected leg muscle groups are weakened -- to evaluate gait robustness and compensatory control strategies. The suite further includes two manipulation tasks (bottle pouring and cube manipulation) that emphasize coordination and precision, and one non-human locomotion task based on an ostrich muscle model that evaluates generalization beyond human morphology.
+                        </p>
+                        <img src="assets/images/environments.png" class="interpolation-image" alt="" style="display: block; margin-left: auto; margin-right: auto" />
+                        <div style="height:25px" aria-hidden="true"></div>
+                        <h3 class="title is-4"><span class="dvima">Evaluation Results</span></h3>
+                        <h4 class="title is-5"><span class="dvima">Comparison with state-of-the-art LLM/VLM methods</span></h4>
+                        <p style="font-size:125%; text-indent:2em;">
+                            MoVLR consistently produces higher task performance, yielding the longest walking distances on flat, sloped, and rough terrains. The improvements are most pronounced in challenging settings, where terrain irregularities require adaptive stability and coordinated motion. Despite slight a slightly lower performance compared to the human baseline, MoVLR also generalizes effectively to the ostrich environment, demonstrating that multimodal reward refinement leads to more robust and transferable control objectives across biomechanical structures.
+                        </p>
+                        <p style="font-size:125%; text-indent:2em;">
+                            MoVLR achieves the lowest average position and orientation errors compared to all baselines in manipulation tasks, indicating more precise and stable object interactions. The improvements are consistent across both bottle-pouring and cube-rotation movements, suggesting that multimodal feedback enhances the alignment between high-level motion intent and low-level control behavior.
+                        </p>
+                        <div class="columns is-vcentered">
+                            <div class="column is-half">
+                                <figure class="image">
+                                    <img src="assets/images/distance.png" alt="Average distance traveled" style="width:100%; height:auto; object-fit:cover;">
+                                    <figcaption class="has-text-centered is-size-6" style="margin-top:0.5rem">
+                                        a) Locomotion Tasks
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <div class="column is-half">
+                                <figure class="image">
+                                    <img src="assets/images/orientation.png" alt="Average orientation error" style="width:100%; height:auto; object-fit:cover;">
+                                    <figcaption class="has-text-centered is-size-6" style="margin-top:0.5rem">
+                                        b) Manipulation Tasks
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                        <div style="height:25px" aria-hidden="true"></div>
+                        <h4 class="title is-5"><span class="dvima">Evolution of weighted reward terms across refinement stages</span></h4>
+                        <p style="font-size:125%; text-indent:2em;">
+                            The progression of residual reward weights across refinement stages reveals how the feedback-driven process reorganizes the internal optimization landscape toward biomechanically consistent behavior. Visual inspection of the heatmaps shows clear temporal structure in how specific reward terms are emphasized, attenuated, or replaced as refinement proceeds. Rather than uniform or random variation, the weights evolve in a task-specific and interpretable manner that reflects the gradual integration of control priorities derived from feedback. 
+                        </p>
+                        <div class="columns is-vcentered">
+                            <div class="column is-half">
+                                <figure class="image">
+                                    <img src="assets/images/rough_heatmap.png" alt="Rough Terrain Heatmap" style="width:100%; height:auto; object-fit:cover;">
+                                    <figcaption class="has-text-centered is-size-6" style="margin-top:0.5rem">
+                                        a) Rough Terrain
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <div class="column is-half">
+                                <figure class="image">
+                                    <img src="assets/images/bottle_heatmap.png" alt="Bottle PouringHeatmap" style="width:100%; height:auto; object-fit:cover;">
+                                    <figcaption class="has-text-centered is-size-6" style="margin-top:0.5rem">
+                                        b) Bottle Pouring
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                        <p style="font-size:125%; text-indent:2em;">
+                            This progression is also visually illustrated in the figure below, showing the musculoskeletal agent's transition from instability to coordinated walking as successive stages refine control priorities such as balance, posture, and stride formation
+                        </p>
+                        <img src="assets/images/video_feedback.svg" class="interpolation-image" alt="" style="display: block; margin-left: auto; margin-right: auto" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </html>
